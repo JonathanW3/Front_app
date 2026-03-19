@@ -149,6 +149,9 @@ function App() {
             {selectedAgent?.sqlite_db_path && (
               <span className="badge badge-sql">🗄️ SQL</span>
             )}
+            {selectedAgent?.use_charts && (
+              <span className="badge badge-charts">📊 Charts</span>
+            )}
             {selectedAgent && (
               <span className="badge badge-model">🤖 {selectedAgent.llm_model}</span>
             )}

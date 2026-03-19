@@ -1,0 +1,125 @@
+/* Chart Block */
+.chart-block {
+  margin: 12px 0 4px;
+  border: 1px solid #e0e5ec;
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.chart-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e8ecf1;
+}
+
+.chart-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.chart-toolbar-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.chart-action-btn {
+  background: white;
+  border: 1px solid #e0e5ec;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chart-action-btn:hover {
+  background: #E3F2FD;
+  color: #1565C0;
+  border-color: #90CAF9;
+}
+
+.chart-container {
+  width: 100%;
+  height: 380px;
+  padding: 8px;
+}
+
+/* Fullscreen overlay */
+.chart-fullscreen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  animation: chartFadeIn 0.2s ease;
+}
+
+@keyframes chartFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.chart-fullscreen-content {
+  background: white;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 1200px;
+  height: 80vh;
+  position: relative;
+  padding: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.chart-fullscreen-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: #f0f4f8;
+  border: 1px solid #e0e5ec;
+  border-radius: 8px;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  z-index: 1;
+  transition: all 0.2s;
+}
+
+.chart-fullscreen-close:hover {
+  background: #E3F2FD;
+  color: #1565C0;
+  border-color: #90CAF9;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .chart-container {
+    height: 280px;
+  }
+
+  .chart-fullscreen-overlay {
+    padding: 16px;
+  }
+
+  .chart-fullscreen-content {
+    height: 90vh;
+    border-radius: 12px;
+  }
+}

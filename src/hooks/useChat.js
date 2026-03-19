@@ -51,6 +51,7 @@ export default function useChat({ selectedAgent, onError, onSuccess }) {
         session_id: sessionId,
         use_rag: selectedAgent.use_rag !== false,
         use_sql: false,
+        use_charts: selectedAgent.use_charts || false,
         temperature: 0.7,
       })
 
@@ -59,6 +60,7 @@ export default function useChat({ selectedAgent, onError, onSuccess }) {
         content: response.data.answer,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         model: response.data.model_used,
+        charts: response.data.charts || [],
       }
 
       setMessages((prev) => [...prev, assistantMessage])

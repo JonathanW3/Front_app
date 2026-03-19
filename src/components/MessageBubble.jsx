@@ -1,8 +1,10 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, lazy, Suspense } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import WebPOSLogo from './WebPOSLogo'
 import './MessageBubble.css'
+
+const ChartBlock = lazy(() => import('./ChartBlock'))
 
 const COLLAPSE_THRESHOLD = 500
 
@@ -117,6 +119,17 @@ export default function MessageBubble({ msg, agentName }) {
             </button>
           )}
         </div>
+
+        {/* Charts */}
+        {msg.charts && msg.charts.length > 0 && (
+          <Suspense fallback={<div className="chart-loading">Cargando gráfico...</div>}>
+            <div className="msg-charts">
+              {msg.charts.map((chart, i) => (
+                <ChartBlock key={i} chart={chart} index={i} />
+              ))}
+            </div>
+          </Suspense>
+        )}
 
         {/* Actions row */}
         <div className="msg-actions">

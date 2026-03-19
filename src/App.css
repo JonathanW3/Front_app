@@ -131,6 +131,11 @@
   color: #7B1FA2;
 }
 
+.badge-charts {
+  background: #E0F7FA;
+  color: #00695C;
+}
+
 .btn-topbar-action {
   padding: 5px 12px;
   font-size: 14px;

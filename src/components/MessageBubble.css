@@ -308,6 +308,21 @@
   color: #1565C0;
 }
 
+/* Charts */
+.chart-loading {
+  padding: 24px;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.msg-charts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .msg-content {
