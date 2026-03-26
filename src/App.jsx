@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import OrganizationSelect from './components/OrganizationSelect'
 import Sidebar from './components/Sidebar'
 import ChatArea from './components/ChatArea'
 import InputBar from './components/InputBar'
@@ -25,6 +26,11 @@ function App() {
   }, [addToast])
 
   const {
+    organizations,
+    selectedOrganization,
+    selectOrganization,
+    clearOrganization,
+    isLoadingOrgs,
     agents,
     selectedAgent,
     selectAgent,
@@ -105,6 +111,36 @@ function App() {
     }
   }, [messages.length, clearChat])
 
+  // Handle organization change with confirmation
+  const handleChangeOrganization = useCallback(() => {
+    if (messages.length > 0) {
+      setConfirmAction({
+        message: '¿Cambiar de organización? Se perderá la conversación actual.',
+        onConfirm: () => {
+          clearChat()
+          clearOrganization()
+          setConfirmAction(null)
+        },
+      })
+    } else {
+      clearOrganization()
+    }
+  }, [messages.length, clearChat, clearOrganization])
+
+  // Show organization selection if no organization selected
+  if (!selectedOrganization) {
+    return (
+      <>
+        <OrganizationSelect
+          organizations={organizations}
+          isLoading={isLoadingOrgs}
+          onSelect={selectOrganization}
+        />
+        <Toast toasts={toasts} onRemove={removeToast} />
+      </>
+    )
+  }
+
   return (
     <div className="app-layout">
       <h1 className="sr-only">WebPOS IA - Chat de Inteligencia Artificial</h1>
@@ -117,6 +153,8 @@ function App() {
         onNewChat={handleNewChat}
         sidebarOpen={sidebarOpen}
         getAgentIcon={getAgentIcon}
+        organizationName={selectedOrganization.name}
+        onChangeOrganization={handleChangeOrganization}
       />
 
       {/* Main Area */}

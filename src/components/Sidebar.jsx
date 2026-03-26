@@ -8,6 +8,8 @@ export default function Sidebar({
   onNewChat,
   sidebarOpen,
   getAgentIcon,
+  organizationName,
+  onChangeOrganization,
 }) {
   const handleAgentClick = (agent) => {
     onSelectAgent(agent)
@@ -45,6 +47,24 @@ export default function Sidebar({
           <span className="plus-icon">+</span> Nueva Conversación
         </button>
       </div>
+
+      {/* Organization Badge */}
+      {organizationName && (
+        <div className="sidebar-org-badge">
+          <div className="sidebar-org-info">
+            <span className="sidebar-org-label">ORGANIZACIÓN</span>
+            <span className="sidebar-org-name">{organizationName}</span>
+          </div>
+          <button
+            className="btn-change-org"
+            onClick={onChangeOrganization}
+            aria-label="Cambiar organización"
+            title="Cambiar organización"
+          >
+            ↩
+          </button>
+        </div>
+      )}
 
       {/* Agents Label */}
       <div className="sidebar-agents-label" id="agents-label">Agentes disponibles</div>
