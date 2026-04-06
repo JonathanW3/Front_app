@@ -52,6 +52,7 @@ export default function useChat({ selectedAgent, onError, onSuccess }) {
         use_rag: selectedAgent.use_rag !== false,
         use_sql: false,
         use_charts: selectedAgent.use_charts || false,
+        use_fe: selectedAgent.use_fe || false,
         temperature: 0.7,
       })
 

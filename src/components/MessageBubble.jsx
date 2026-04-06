@@ -8,6 +8,20 @@ const ChartBlock = lazy(() => import('./ChartBlock'))
 
 const COLLAPSE_THRESHOLD = 500
 
+// Elimina bloques de acción/resultado internos que el LLM puede dejar en el texto
+function stripInternalBlocks(text) {
+  return text
+    .replace(/\*{0,2}\[FE_ACTION\]\*{0,2}[\s\S]*?\*{0,2}\[\/FE_ACTION\]\*{0,2}/g, '')
+    .replace(/\*{0,2}\[RESULTADO DE FE\]\*{0,2}[\s\S]*?\*{0,2}\[\/RESULTADO DE FE\]\*{0,2}/g, '')
+    .replace(/\*{0,2}\[EMAIL_ACTION\]\*{0,2}[\s\S]*?\*{0,2}\[\/EMAIL_ACTION\]\*{0,2}/g, '')
+    .replace(/\*{0,2}\[IMAP_ACTION\]\*{0,2}[\s\S]*?\*{0,2}\[\/IMAP_ACTION\]\*{0,2}/g, '')
+    .replace(/\*{0,2}\[CALENDAR_ACTION\]\*{0,2}[\s\S]*?\*{0,2}\[\/CALENDAR_ACTION\]\*{0,2}/g, '')
+    .replace(/\*{0,2}\[COTIZACION_ACTION\]\*{0,2}[\s\S]*?\*{0,2}\[\/COTIZACION_ACTION\]\*{0,2}/g, '')
+    .replace(/\*{0,2}\[RESULTADO DE [A-Z ]+\]\*{0,2}[\s\S]*?\*{0,2}\[\/RESULTADO DE [A-Z ]+\]\*{0,2}/g, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim()
+}
+
 function CodeBlock({ children, className }) {
   const [copied, setCopied] = useState(false)
 
@@ -51,10 +65,11 @@ export default function MessageBubble({ msg, agentName }) {
   const [collapsed, setCollapsed] = useState(true)
   const [copiedMsg, setCopiedMsg] = useState(false)
 
-  const isLong = msg.content.length > COLLAPSE_THRESHOLD
+  const cleanContent = msg.role === 'assistant' ? stripInternalBlocks(msg.content) : msg.content
+  const isLong = cleanContent.length > COLLAPSE_THRESHOLD
   const displayContent = isLong && collapsed
-    ? msg.content.slice(0, COLLAPSE_THRESHOLD) + '...'
-    : msg.content
+    ? cleanContent.slice(0, COLLAPSE_THRESHOLD) + '...'
+    : cleanContent
 
   const handleCopyMessage = useCallback(async () => {
     try {
